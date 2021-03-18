@@ -10,5 +10,5 @@ RUN apt-get install -y libpq-dev
 RUN pip install psycopg2
 RUN pip install psycopg2-binary
 # MSSQL
-RUN pip install pymssql
+#RUN pip install pymssql
 
