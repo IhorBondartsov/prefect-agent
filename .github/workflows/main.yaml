@@ -1,5 +1,7 @@
   name: prefectagent
-  on: push
+  on:
+    push:
+      branches: [ main ]
   jobs:
     prefectimage:
       runs-on: ubuntu-latest
@@ -21,16 +23,15 @@
         - name: Docker Login
           uses: docker/login-action@v1
           with:
-            registry: ghcr.io
-            username: ${{ github.repository_owner }}
-            password: ${{ secrets.GH_PAT }}
+            username: ${{ secrets.DOCKER_HUB_USERNAME }}
+            password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         - name: Build and push
           id: docker_build
           uses: docker/build-push-action@v2
           with:
             platforms: linux/amd64,linux/arm64
             push: true
-            tags: ghcr.io/rbastian/prefect:${{steps.vars.outputs.tag}}
+            tags: bondartsov/prefectagent:latest
         - name: Image digest
           run: echo ${{ steps.docker_build.outputs.digest }}
         - name: Clear
